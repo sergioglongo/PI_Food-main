@@ -1,0 +1,100 @@
+.card{
+    width: 300px;
+    margin:10px;
+    overflow: hidden;
+    background: white;
+    backdrop-filter: 5px;
+    -webkit-backdrop-filter: blur();
+    box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
+    cursor: default;
+    transition: all 200ms ease;
+}
+
+.card:hover{
+    box-shadow: 3px 3px 15px rgba(0,0,0,0.4);
+    transform: translateY(.5%) translateX(.5%)
+}
+
+.starContainer{
+    position: relative;
+    top: -215px;
+    left: 100px;
+}
+
+.score{
+    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+    position: relative;
+    top: -21px;
+    left:38px;
+    z-index: 2;
+    color: white;
+    font-weight: 600;
+}
+
+.star{
+    width:60px;
+    height:60px;
+
+} 
+
+
+.pictureContainer{
+    height: 252px;
+    width: 300px;
+}
+.picture{
+    display: block;
+    max-width: 100%;
+    /* vertical-align: middle; */
+    border-style: none;
+
+}
+
+
+
+.info{
+ 
+    text-align: center;
+    font-size: larger;
+    font-weight: 400;
+    color: lightslategray
+}
+
+.list{
+    
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* display: flexbox; */
+    justify-content: space-evenly;
+    padding: 10px 10px;
+    list-style: none;
+    font-size: medium;
+    line-height: 150%;
+    height: 100px;
+}
+
+.title{
+    font-size: 20px;
+    font-weight: 400;
+    margin-top: 15px;
+    color: black;
+    height: 30px;
+}
+
+
+.button{
+    display: inline-block;
+    text-decoration: none;
+    background: #089c34 ;
+    color: white;
+    width: 100%;
+    padding: 15px 0;
+    margin-top: 20px;
+    border: none;
+}
+
+.button:hover {
+    background: #056822;
+}
