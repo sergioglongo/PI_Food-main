@@ -1,18 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setRecipesFiltered ,  getAllRecipes,setSearchtext} from '../redux/actions'
+import { setRecipesFiltered ,  getAllRecipes, setSearchtext} from '../redux/actions'
 
 
 export default function SearchBar() {
  
-    const [search,setSearch] = useState("")
     let searchText = useSelector(state => state.searchText)
  
     const dispatch = useDispatch()
     
     let recipesAll = useSelector(state => state.recipesAll)
     useEffect(()=>{
-        console.log(recipesAll);    
         if(recipesAll.length === 0){
             dispatch(getAllRecipes())
         }
@@ -31,8 +29,9 @@ export default function SearchBar() {
         return item
     })
     
-    dispatch(setRecipesFiltered(recipesFiltered))
-    
+    useEffect(()=>{
+        dispatch(setRecipesFiltered(recipesFiltered))
+    },[searchText,recipesAll])
  
     return (
         <div>

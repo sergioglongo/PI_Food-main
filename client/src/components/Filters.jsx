@@ -6,10 +6,10 @@ export default function Filters() {
 
     const dispatch = useDispatch()
     const initialState = {
-        ['dietas']: "ALL",
-        ['ordenarPor']: "SIN",
-        ['AscDes']: "1",
-        ['origen']: "ALL",
+        dietas: "ALL",
+        ordenarPor: "SIN",
+        AscDes: "1",
+        origen: "ALL",
     }
 
     const [selectsState, setSelectsState] = useState(initialState)
@@ -38,6 +38,7 @@ export default function Filters() {
         let ordenarPor = document.getElementById("ordenarPor").value
         let AscDes = document.getElementById("AscDes").value
         let selOrigen = document.getElementById("selOrigen").value
+        // Si hay algun filtro fuera del estado inicial blanquea el campo searchText y borra su estado
         if (selDietas !== "ALL" || ordenarPor !== "SIN" || AscDes !== "1" || selOrigen !== "ALL") {
              inputClear()
              dispatch(setSearchtext(""))        
@@ -58,6 +59,7 @@ export default function Filters() {
         let ordenarPor = document.getElementById("ordenarPor").value
         let AscDes = document.getElementById("AscDes").value
         let selOrigen = document.getElementById("selOrigen").value
+        // Si hay algun filtro fuera del estado inicial los cambia a su estado inicial
         if (selDietas !== "ALL" || ordenarPor !== "SIN" || AscDes !== "1" || selOrigen !== "ALL") {
             document.getElementById("selDietas").value = "ALL"
             document.getElementById("ordenarPor").value ="SIN"
@@ -71,64 +73,52 @@ export default function Filters() {
     function processRecipes() {
         let recipedProccesed = recipesAll.filter(recipe => {
             let regExp = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i //formato uuid
-
             switch (selectsState['origen']) {
-                case "DB": if (regExp.test(recipe.id)) {
-                    if(selectsState['dietas'] === 'ALL')
-                        return recipe
-                    if(recipe.diets.includes(selectsState['dietas']))
-                        return recipe
-                }
+                case "DB": if (regExp.test(recipe.id)) { // si cumple con la expresion regular es de la DB
+                            if (filterDiet(recipe)) return recipe // Evalua si incluye la dieta seleccionada
+                           }
                     break
-                case "API": if (!regExp.test(recipe.id)) {
-                    if(selectsState['dietas'] === 'ALL')
-                        return recipe
-                    if(recipe.diets.includes(selectsState['dietas']))
-                        return recipe
-                }
+                case "API": if (!regExp.test(recipe.id)) { //si no cumple con la expresion regular es de la API
+                                if (filterDiet(recipe)) return recipe // Evalua si incluye la dieta seleccionada
+                           }
                     break
-                default: {
-                    if(selectsState['dietas'] === 'ALL')
-                        return recipe
-                    if(recipe.diets.includes(selectsState['dietas']))
-                        return recipe
-                }
-            }
-
-        })
-
-        
+                default: if (filterDiet(recipe)) return recipe // Evalua si incluye la dieta seleccionada
+            } // fin del switch origen
+        })// fin del recipesAll.filter
         switch (selectsState['ordenarPor']) {
-            case 'TIT': return ordenar("title",recipedProccesed)
-            case 'SCO': return ordenar("healtScore",recipedProccesed)
-
+            case 'TIT': return ordenar("title", recipedProccesed)
+            case 'SCO': return ordenar("healtScore", recipedProccesed)
             default: return recipedProccesed
-        }
+        }//fin del switch ordenarPor
+    }//fin processRecipe
 
-            
-
+    function filterDiet(recipe) {
+        if(selectsState['dietas'] === 'ALL')
+            return recipe
+        if(recipe.diets.includes(selectsState['dietas']))
+            return recipe 
     }
 
-    function ordenar(por,recipedProccesed) {
-    if(selectsState['AscDes'] === '1')
-        return recipedProccesed.sort((recipe1,recipe2)=>{
-            if(recipe1[por] < recipe2[por])
-            return -1
-            else if(recipe1[por] > recipe2[por])
-            {console.log("entro en menor, por:",por,"recipe1[por:]",recipe1[por]);
-                return 1}
-            else
-                return 0
-        })
-    else
-    return recipedProccesed.sort((recipe1,recipe2)=>{
-        if(recipe1[por] > recipe2[por])
-            return -1
-        else if(recipe1[por] < recipe2[por])
-            return 1
+    function ordenar(por, recipedProccesed) {
+        if (selectsState['AscDes'] === '1')
+            return recipedProccesed.sort((recipe1, recipe2) => {
+                if (recipe1[por] < recipe2[por])
+                    return -1
+                else if (recipe1[por] > recipe2[por]) {
+                    return 1
+                }
+                else
+                    return 0
+            })
         else
-            return 0
-    })
+            return recipedProccesed.sort((recipe1, recipe2) => {
+                if (recipe1[por] > recipe2[por])
+                    return -1
+                else if (recipe1[por] < recipe2[por])
+                    return 1
+                else
+                    return 0
+            })
 
    
     }

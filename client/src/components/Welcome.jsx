@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import {getAllDiets, setDietsInitial} from '../redux/actions'
+import { setDietsInitial} from '../redux/actions'
 
 
 export default function Welcome() {

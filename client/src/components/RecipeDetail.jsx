@@ -6,16 +6,16 @@ import {getRecipeById,emptyRecipeById} from '../redux/actions'
 export default function CardDetail(params) {
     
     const dispatch = useDispatch()
-    let {recipeId} = useParams()
     let indexDiet=1
     let indexStep=1
+    let {recipeId} = useParams()
     
     useEffect(() => {
         dispatch(getRecipeById(recipeId))
         return (
             dispatch(emptyRecipeById())
         )
-   },[dispatch])
+   },[dispatch,recipeId])
    
    const recipeById = useSelector(state=> state.recipeById)
   
