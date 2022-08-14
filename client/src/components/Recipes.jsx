@@ -1,17 +1,19 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux"
 import Recipe from './Recipe'
 import "./recipes.css";
 
-export default function Recipes(params) {
+export default function Recipes() {
 
-    const recipes = useSelector(state => state.recipesFiltered)
-
+    const recipesFiltered = useSelector(state => state.recipesFiltered)
+    const recipesPags = useSelector(state => state.recipesPags)
+    const currentPage = useSelector(state => state.currentPage)
+  
     return (
         <div>
             <div className="contenedor">
-                {/* <div className="card"> */}
                     {
-                        recipes?.map(recipe => {
+                        recipesPags[currentPage-1]?.map(recipe => {
                             return <Recipe
                                 key={recipe.id}
                                 id={recipe.id}
@@ -22,7 +24,6 @@ export default function Recipes(params) {
                             />
                         })
                     }
-                {/* </div> */}
             </div>
         </div>
     )

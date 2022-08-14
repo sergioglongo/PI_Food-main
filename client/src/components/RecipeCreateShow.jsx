@@ -23,7 +23,7 @@ export default function RecipeCreateShow({dietsAll,onChange,onSubmit,onClickAdd,
             </div>
             <div>
                     <p>Dietas:</p>
-                    <select id="dietasAll" name="dietasAll"  onChange={(e) => onChange(e)}>
+                    <select id="dietasAll" name="dietasAll"  >
                     {
                         dietsAll.map((element, i) => (
                             <option key={element.id} value={element.name}>{element.name}</option>

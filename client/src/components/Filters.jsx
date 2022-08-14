@@ -31,23 +31,24 @@ export default function Filters() {
         })
         
     }
+    useEffect(() => {
+        if(searchText)
+            selectorsClear()
+    }, [searchText])
     
     useEffect(() => {
-        dispatch(setRecipesFiltered(processRecipes()))
         let selDietas = document.getElementById("selDietas").value
         let ordenarPor = document.getElementById("ordenarPor").value
         let AscDes = document.getElementById("AscDes").value
         let selOrigen = document.getElementById("selOrigen").value
         // Si hay algun filtro fuera del estado inicial blanquea el campo searchText y borra su estado
         if (selDietas !== "ALL" || ordenarPor !== "SIN" || AscDes !== "1" || selOrigen !== "ALL") {
-             inputClear()
-             dispatch(setSearchtext(""))        
+            inputClear()
+            dispatch(setSearchtext("")) 
+            dispatch(setRecipesFiltered(processRecipes()))
         }
     }, [selectsState],)
  
-    useEffect(() => {
-        selectorsClear()
-    }, [searchText])
  
 
     function inputClear() {
