@@ -32,6 +32,7 @@ export async function setRecipeCreate(data) {
       'Content-Type': 'application/json'
     }
   }).then(res => res.json())
+//  .then(res => JSON.parse(res))
     .catch(error => console.error('Error:', error))
 
 }
@@ -63,11 +64,44 @@ export function emptyRecipeById() {
   )
 }
 
+export function setRecipesPage(data) {
+  return (
+    {
+      type: "SET_RECIPES_PAGE",
+      payload: data
+    }
+  )
+}
+
+export function setCurrentPage(data) {
+  return (
+    {
+      type: "SET_CURRENT_PAGE",
+      payload: data
+    }
+  )
+}
+
 export function setSearchtext(data) {
   return (
     {
       type: "SET_SEARCHTEXT",
       payload: data
+    }
+  )
+}
+
+export function setPagination(recipePerPage,totalRecipes,recipesFiltered) {
+  let recipesPaginates = []
+  for(let page = 1;recipesFiltered[0]; page){
+    const indexLastRecipe = page * recipePerPage
+    const indexFirstRecipe = indexLastRecipe - recipePerPage
+    recipesPaginates.push( recipesFiltered.splice(indexFirstRecipe,indexLastRecipe))
+  }
+   return (
+    {
+      type: "SET_PAGINATION",
+      payload: recipesPaginates
     }
   )
 }

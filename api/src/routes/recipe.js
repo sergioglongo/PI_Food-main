@@ -18,7 +18,6 @@ router.post("/prueba", (req,res) =>{
 // ruta que si recibe query responde con datos filtrados y si no devuelve todas las recipes
 router.get("/", async(req,res,next) => {
     let findTitle = req.query.title
-    console.log("soy get recipe del back");
     let recipesFormatedDb = []
     let recipesDb = ""
     let recipesFiltered = []
@@ -50,7 +49,6 @@ router.get("/", async(req,res,next) => {
                 diets: recipe.diets.map(diet => diet.name),
             }))
         }
-        console.log(recipesFiltered[5].healthScore);
         let recipesFormatedApi =(recipesFiltered?.map(recipe => ({
             id: recipe.id,
             title: recipe.title,
@@ -69,7 +67,6 @@ router.get("/", async(req,res,next) => {
 //Obtiene una receta a traves de id enviado en url con datos extendidos
 //utilizada para vista de detalle de receta
 router.get('/:id', async(req,res,next) => {
-    console.log("soy getid recipe del back");
     const recipeId = req.params.id
     let recipeFormated = ""
     let regExp = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
@@ -129,7 +126,7 @@ router.get('/:id', async(req,res,next) => {
 
 //creacion de Recipe en database
 router.post('/nuevo', async (req,res,next) => {
-    console.log(req.body);
+    console.log("Paso por nuevo del back, datos:",req.body);
     const recipe = req.body //me llega un objeto pasado transformado por json
     if(recipe.title && recipe.summary){
         try{

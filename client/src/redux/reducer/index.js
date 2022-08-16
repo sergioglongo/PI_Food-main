@@ -1,9 +1,11 @@
 const initialState = {
     recipesAll: [],
     recipesFiltered: [],
+    recipesPags: [],
+    currentPage: 1,
     recipeById: {},
-    dietsAll:[],
-    searchText:"",
+    dietsAll: [],
+    searchText: "",
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -27,17 +29,32 @@ export default function rootReducer(state = initialState, action) {
         case "EMPTY_RECIPE_BY_ID":
             return {
                 ...state,
-                recipeById:{}
-                }
+                recipeById: {}
+            }
         case "GET_ALL_DIETS":
             return {
                 ...state,
                 dietsAll: action.payload
             }
         case "SET_INITIAL_DIETS":
-            return{
+            return {
                 ...state,
                 dietsAll: action.payload
+            }
+        case "SET_RECIPES_PAGE":
+            return {
+                ...state,
+                recipesPage: action.payload
+            }
+        case "SET_PAGINATION":
+            return{
+                ...state,
+                recipesPags : action.payload
+            }   
+        case "SET_CURRENT_PAGE":
+            return {
+                ...state,
+                currentPage: action.payload
             }
         case "SET_SEARCHTEXT":
             return {
