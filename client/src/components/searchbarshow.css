@@ -13,6 +13,10 @@
     align-items: flex-start;
   }
 
+  .button-content{
+    margin-top: 8px;  
+  }
+
   .button-reset {
     display: flex;
     flex-direction:row;
@@ -23,3 +27,134 @@
   .input-container {
     margin: 10px;
   }
+
+  .input-container input{
+    height: 25px;
+    float:none;
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+  }
+
+  .selectdiv {
+    position: relative;
+    /*Don't really need this just for demo styling*/
+    
+    float: left;
+    min-width: 200px;
+    margin: 50px 33%;
+  }
+  
+  /* IE11 hide native button (thanks Matt!) */
+  
+  
+  .selectdiv:after {
+    content: '<>';
+    font: 17px "Consolas", monospace;
+    color: rgb(20, 146, 3);
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    right: 11px;
+    /*Adjust for position however you want*/
+    
+    top: 18px;
+    padding: 0 0 2px;
+    border-bottom: 1px solid #999;
+    /*left line */
+    
+    position: absolute;
+    pointer-events: none;
+  }
+  
+  .combo-select {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    height: 30px;
+    float: right;
+    margin: 5px 0px;
+    padding: 0px 5px;
+    font-size: 16px;
+    line-height: 1.75;
+    color: rgb(20, 146, 3);
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    -ms-word-break: normal;
+    word-break: normal;
+  }
+
+  .button-reset {
+    position: relative;
+    background: rgb(20, 146, 3);;
+    color:#ffffff;
+    padding: 15px;
+    margin: 20px 1px 1px;
+    border-radius: 10px;
+    width: 100px;
+    height: 4px;
+    font-size: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  .button-reset.selected {
+    background: white;
+    color: black;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  }
+  .globe {
+    position: absolute;
+    top: 0;
+    font-size: 14px;
+    background: #ffffff;
+    color: #ffffff;
+    padding: 5px 8px;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .globe::before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 8px;
+    background: #ffffff;
+    bottom: -3px;
+    left: 50%;
+    transform: translate(-50%) rotate(45deg);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .button-reset:hover .globe {
+    top: -70px;
+    left: 10px;
+    opacity: 0.9;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  
+  svg:hover span,
+  svg:hover .globe {
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+  }
+  
+  .button-reset:hover,
+  .button-reset:hover .globe,
+  .button-reset:hover .globe::before {
+    background: linear-gradient(320deg, rgb(20, 146, 3), rgb(20, 146, 3));
+    color: #ffffff;
+  }
+
+  

@@ -1,6 +1,6 @@
 import {  useState ,useEffect} from "react"
 import { useDispatch, useSelector } from "react-redux"
-import {setRecipeCreate, getAllDiets} from '../redux/actions'
+import {setRecipeCreate, getAllDiets, getAllRecipes} from '../redux/actions'
 import {onClickAddLogic,onClickQuitLogic,cleanData} from './RecipeCreateLogic'
 import './recipecreate.css'
 
@@ -18,9 +18,6 @@ export default function RecipeCreate() {
     })
 
     const [errors, setErrors] = useState({})
-    const [loading, setLoading] = useState(false)
-    
-    const [response, setResponse] = useState(null)
    
     const dispatch = useDispatch()
     
@@ -41,6 +38,7 @@ export default function RecipeCreate() {
         event.preventDefault()
         setRecipeCreate(recipeNew)
         cleanData(dietsAll)
+        dispatch(getAllRecipes())
     }
     
  
@@ -159,9 +157,9 @@ export default function RecipeCreate() {
                             
                             <button className="button-create" type="button" value="Quitar" onClick={(e) => { onClickQuit(e) }} ><span className="globe">Quitar de Dietas</span>Quitar</button> 
                         </div>
-                        <div>
+                        <div className="list-container">
                             <p>Seleccion:</p>
-                            <select id="dietasSel" name="diets" multiple="multiple">
+                            <select className="lists" id="dietasSel" name="diets" multiple="multiple">
                             </select>
                         </div>
                         <div>

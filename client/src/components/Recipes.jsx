@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useSelector } from "react-redux"
 import Recipe from './Recipe'
 import "./recipes.css";

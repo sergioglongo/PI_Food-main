@@ -5,18 +5,18 @@ export default function Nav() {
 
 
   return (
-    <nav className="navbar">
+    <nav className="topnav">
       <div>
-      <Link to={`/`}>
+      <Link id='link' to={`/`}>
         Inicio
       </Link> 
       </div>      <div>
-      <Link to={`/FoodHome/Recipes`}>
+      <Link id='link' to={`/FoodHome/Recipes`}>
         Listado de Recetas
       </Link> 
       </div>
       <div>
-      <Link to={`/FoodHome/RecipeCreate`}>
+      <Link id='link' to={`/FoodHome/RecipeCreate`}>
         Crear Receta
       </Link>
         </div>    

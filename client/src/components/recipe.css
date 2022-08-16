@@ -8,6 +8,8 @@
     box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
     cursor: default;
     transition: all 200ms ease;
+    display: grid;
+    align-content: space-between;
 }
 
 .card:hover{
@@ -52,7 +54,9 @@
 
 }
 
+.info-container{
 
+}
 
 .info{
  
@@ -63,16 +67,14 @@
 }
 
 .list{
-    
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* display: flexbox; */
-    justify-content: space-evenly;
-    padding: 10px 10px;
     list-style: none;
-    font-size: medium;
-    line-height: 150%;
-    height: 100px;
+    display: inline-block;
+    margin: 8px;
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: .03em;
+    color: var(--primary);
 }
 
 .title{

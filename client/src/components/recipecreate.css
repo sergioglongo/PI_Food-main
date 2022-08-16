@@ -2,14 +2,14 @@ input{
     padding: 12px;
     margin: 10px 0px;
     border-radius: 5px;
-    border: 1px solig gray;
+    border: 1px solid gray;
     height: 4px;
     
 }
 
 .form-container{
     border-radius: 5px;
-    border: 1px solig gray; 
+    border: 1px solid gray; 
     background: white;
     padding: 20px 50px 20px 50px;
     margin-top: 30px;

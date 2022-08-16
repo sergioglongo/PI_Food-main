@@ -1,4 +1,3 @@
-import './App.css';
 import { Route } from 'react-router-dom'
 import Nav from './components/Nav'
 import RecipesContainer from './components/RecipesContainer'
@@ -6,7 +5,7 @@ import RecipeDetail from './components/RecipeDetail'
 import Welcome from './components/Welcome';
 import RecipeCreate from './components/RecipeCreate'
 import Error404 from './components/Error404'
-
+import './App.css'
 
 function App() {
 

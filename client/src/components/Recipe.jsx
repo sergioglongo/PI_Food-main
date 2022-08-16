@@ -12,22 +12,25 @@ export default function Recipe(props) {
                     <img className='star' src='https://www.seekpng.com/png/full/38-387704_star-vector-png-transparent-image-star-vector-png.png' alt="" />
                 </div>
             </div>
-            <div className='info'> Tipos de recetas
-                <ul className='list'>
-                    {props.diets.map(diet => (
+            <div className='info-container'>
+                <h3 className='title'>{props.title}</h3>
+                <div className='info'>
+                    <div>Tipos de recetas</div> 
+                    <ul className='list'>
+                        {props.diets.map(diet => (
 
-                        <li key={index++}>
-                            {diet}
-                        </li>
-                    ))}
-                </ul>
+                            <li key={index++}>
+                                {diet}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
-            <h3 className='title'>{props.title}</h3>
-            <Link to={`/FoodHome/RecipeDetail/${props.id}`}>
-                <button type="button" className='button'>
-                    Detalles
-                </button>
-            </Link>
+                <Link to={`/FoodHome/RecipeDetail/${props.id}`}>
+                    <button type="button" className='button'>
+                        Detalles
+                    </button>
+                </Link>
         </div>
     )
 }

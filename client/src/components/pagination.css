@@ -63,8 +63,9 @@
   }
   
   .navigation:hover .globe {
-    top: -45px;
-    opacity: 1;
+    top: -50px;
+    left: -15px;
+    opacity: 0.85;
     visibility: visible;
     pointer-events: auto;
   }
