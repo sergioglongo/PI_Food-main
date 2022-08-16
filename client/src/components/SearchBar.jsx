@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setRecipesFiltered, getAllRecipes, setSearchtext, getAllDiets, setCurrentPage } from '../redux/actions'
-
+import SearchBarShow from './SearchBarShow'
 
 export default function SearchBar() {
     const dispatch = useDispatch()
@@ -25,8 +25,6 @@ export default function SearchBar() {
         if (dietsAll.length === 0)
             dispatch(getAllDiets())
     }, [dispatch])
-
-    // recipesAll = useSelector(state => state.recipesAll)
 
     function onChange(e) {
         dispatch(setSearchtext(e.target.value))
@@ -120,44 +118,7 @@ export default function SearchBar() {
     }
     return (
         <div>
-            <h3>Buqueda</h3>
-            <input type="text" id="buscar" placeholder="Buscar" onChange={(e) => { onChange(e) }} />
-            <div>
-                Dietas:
-                <select name="dietas" id="selDietas" onChange={(e) => handledOnClick(e)}>
-                    <option key="0" value="ALL">Todas</option>
-                    {
-                        dietsAll.map((element, i) => (
-                            <option key={element.id} value={element.name}>{element.name}</option>
-                        ))
-                    }
-                </select>
-            </div>
-            <div>
-                Ordenar por:
-                <select name="ordenarPor" id="ordenarPor" onChange={(e) => handledOnClick(e)}>
-                    <option key="0" value="SIN">Sin ordenar</option>
-                    <option key="1" value="TIT">Titulo Receta</option>
-                    <option key="2" value="SCO">Nivel saludable</option>
-                </select>
-            </div>            <div>
-                Orden:
-                <select name="AscDes" id="AscDes" onChange={(e) => handledOnClick(e)}  >
-                    <option key="1" value="1">Ascendente</option>
-                    <option key="0" value="0">Descendente</option>
-                </select>
-            </div>
-            <div>
-                Origen:
-                <select name="origen" id="selOrigen" onChange={(e) => handledOnClick(e)}>
-                    <option key="0" value="ALL">Ambos</option>
-                    <option key="1" value="API">API</option>
-                    <option key="2" value="DB">Base Datos</option>
-                </select>
-                <button name="reset" value="resetear" onClick={() => {
-                    inputsClear()
-                }}>Resetear</button>
-            </div>
+            <SearchBarShow dietsAll={dietsAll} handledOnClick={handledOnClick} onChange={onChange} inputsClear={inputsClear} />
         </div>
 
     )

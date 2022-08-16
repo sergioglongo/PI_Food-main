@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentPage,setPagination} from '../redux/actions';
+import './pagination.css'
 
 export default function Pagination() {
     const recipePerPage=9
@@ -39,22 +40,36 @@ export default function Pagination() {
 
     return (
         <div>
-            <nav>
-                <div>
-                    Total de recetas: {totalRecipes}
-                </div>
-                <div>
-                    <button value="anterior" onClick={() => previousPage()}>anterior</button>
-                </div>
-                <div>
+            <div className='buttons-container'>
+                <button className="navigation" value="anterior" onClick={() => previousPage()}>
+                    <span className="globe">Pagina anterior</span>
+                    <span>
+                        {"<-"}
+                    </span>
+                </button>
+                <div className='buttons-container'>
                     {pageNumbers.map(number => (
-                        <button value={number} key={number} onClick={(e) => currentPageAsign(e)}>{number}</button>
-                    ))}
+                        <div key={number}>
+                            {number !== currentPage ?
+                                <button value={number} className="navigation" onClick={(e) => currentPageAsign(e)}>
+                                    {number}
+                                </button> :
+                                <button value={number} className="navigation selected" onClick={(e) => currentPageAsign(e)}>
+                                    {number}
+                                </button>
+                            }
+                        </div>))}
                 </div>
-                <div>
-                    <button value="siguiente" onClick={() => nextPage()}>siguiente</button>
-                </div>
-            </nav>
+                <button className="navigation" value="siguiente" onClick={() => nextPage()}>
+                    <span className="globe">Pagina siguiente</span>
+                    <span>
+                        {"->"}
+                    </span>
+                </button>
+            </div>
+            <div className='total'>
+                Total de recetas: {totalRecipes}
+            </div>
         </div>
     );
 }

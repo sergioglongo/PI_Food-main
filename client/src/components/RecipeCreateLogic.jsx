@@ -26,13 +26,16 @@ export function onClickQuitLogic() {//Quitar de select de dietas elegidas y pasa
 export function cleanData(diets) {
     let dietasSel = document.getElementById("dietasSel")
     let dietasAll = document.getElementById("dietasAll")
+    let steps = document.getElementById("steps")
     document.getElementById("formCreate").reset() //blanquea campos
     while (dietasSel.options[0])// blanquea combo seleccionadas
         dietasSel.removeChild(dietasSel[0])
     while (dietasAll.options[0])// blanquea combo de dietas
-        dietasAll.removeChild(dietasAll[0])// carga nuevamente dietas
+        dietasAll.removeChild(dietasAll[0])
+    while (steps.options[0])// blanquea combo de pasos
+        steps.removeChild(steps[0])// 
     let option = ""
-    diets.map((element, i) => {
+    diets.map((element, i) => {// carga nuevamente dietas
         option = document.createElement('option')
         option.value = element.name
         option.text = element.name

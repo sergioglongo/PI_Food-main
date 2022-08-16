@@ -24,6 +24,7 @@ body{
     /* padding-left: 15px;
     padding-right: 15px; */
     gap: 15px;
+    justify-content: center;
  }
 
  @media screen and (max-width:900px){
