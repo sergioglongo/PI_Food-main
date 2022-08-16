@@ -1,11 +1,11 @@
-input{
+/* input{
     padding: 12px;
     margin: 10px 0px;
     border-radius: 5px;
     border: 1px solid gray;
     height: 4px;
     
-}
+} */
 
 .form-container{
     border-radius: 5px;
@@ -19,15 +19,23 @@ input{
     font-size: 12px;   
     padding: 3px;
     color: red;
-    display: none;
 }
 
-.input-validate:invalid ~ .error-message{
-display: block;
+.input-normal{
+  padding: 12px;
+  margin: 10px 0px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  height: 4px;
 }
 
-
-
+.input-area{
+  padding: 12px;
+  margin: 10px 0px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  height: 8px;
+}
 
 .buttons-container {
     display: flex;
@@ -57,12 +65,40 @@ display: block;
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
+
+
+  
   .button-create.selected {
     background: white;
     color: black;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
   }
   
+  .button-submit {
+    position: relative;
+    background: rgb(20, 146, 3);;
+    color:#ffffff;
+    padding: 15px;
+    margin: 20px 1px 1px;
+    border-radius: 10px;
+    width: 100%;
+    height: 5px;
+    font-size: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .button-submit.selected {
+    background: white;
+    color: black;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  }
+
   .globe {
     position: absolute;
     top: 0;
@@ -90,7 +126,7 @@ display: block;
     transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     
   }
-  
+  .button-submit:hover .globe,
   .button-create:hover .globe {
     top: -35px;
     left: -35px;
@@ -104,17 +140,22 @@ display: block;
     text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
   }
   
+  .button-submit:hover,
   .button-create:hover{
     background: rgb(19, 153, 1);
     color: #ffffff;
   }
+  .button-submit:hover .globe, 
   .button-create:hover .globe{
     background: rgb(19, 153, 1);
     opacity: .8;
     color: #ffffff;
   }
+  .button-submit:hover .globe::before, 
   .button-create:hover .globe::before {
     background: rgb(19, 153, 1);
     opacity: .7;
     color: #ffffff;
   }
+
+

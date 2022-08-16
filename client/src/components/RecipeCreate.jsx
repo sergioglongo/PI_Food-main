@@ -1,24 +1,24 @@
 import {  useState ,useEffect} from "react"
 import { useDispatch, useSelector } from "react-redux"
 import {setRecipeCreate, getAllDiets, getAllRecipes} from '../redux/actions'
-import {onClickAddLogic,onClickQuitLogic,cleanData} from './RecipeCreateLogic'
+import {onClickAddLogic,onClickQuitLogic,cleanData,validationsForm} from './RecipeCreateLogic'
 import './recipecreate.css'
 
 export default function RecipeCreate() {
 
-
-
-    const [recipeNew, setRecipeNew] = useState({
+    const initialForm = {
         title: "",
         summary: "",
         healtScore: "",
         steps: [],
         diets: [],
         image: ""
-    })
+    }
 
-    const [errors, setErrors] = useState({})
-   
+    const [form, setForm] = useState(initialForm)
+    const [errors,setErrors]= useState({})
+    let showOk = false
+
     const dispatch = useDispatch()
     
     useEffect(() => {
@@ -27,37 +27,48 @@ export default function RecipeCreate() {
     
     const dietsAll = useSelector(state=> state.dietsAll)
 
-    function onChange(event) {
-        setRecipeNew({
-            ...recipeNew,
-            [event.target.name]: event.target.value
+    function handleOnChange(e) {
+        const {name,value} = e.target
+        setForm({
+            ...form,
+            [name]: value
         })
     }   
 
-    function onSubmit(event) {
-        event.preventDefault()
-        setRecipeCreate(recipeNew)
-        cleanData(dietsAll)
-        dispatch(getAllRecipes())
+    function handleOnBlur(e) {
+        handleOnChange(e)
+        setErrors(validationsForm(form))
+    }
+
+    function handleOnSubmit(e) {
+        e.preventDefault()
+        setErrors(validationsForm(form))
+        if(Object.keys(errors).length === 0)
+        {
+            setRecipeCreate(form)
+            cleanData(dietsAll)
+            alert("Se agrego la receta correctamente")
+        }
     }
     
- 
     function onClickAdd(e) {//Quitar de select de dietas disponibles y pasarlo a lista de dietas elegidas
         let selDieta = document.getElementById("dietasAll")
         if (selDieta.options.length)
-            setRecipeNew({
-                ...recipeNew,
+            setForm({
+                ...form,
                 diets: onClickAddLogic()
-            })       
+            }) 
+            setErrors(validationsForm(form))
     }
     
     function onClickQuit(e) {//Quitar de select de dietas elegidas y pasarlo a lista de dietas disponibles
-        let selDieta = document.getElementById("dietasSel")
+        let selDieta = document.getElementById("diets")
         if (selDieta.options.length)
-            setRecipeNew({
-                ...recipeNew,
+            setForm({
+                ...form,
                 diets: onClickQuitLogic()
             })
+            setErrors(validationsForm(form))
     }
     
     function onClickAddStep(e) {
@@ -71,8 +82,8 @@ export default function RecipeCreate() {
         steps.appendChild(option)
         for (let index = 0; steps.options[index]; index++)
             arrayStepsList.push({number: index + 1,step:steps.options[index].value})
-        setRecipeNew({
-                ...recipeNew,
+        setForm({
+                ...form,
                 steps: arrayStepsList
             })
         stepAdd.value =""   
@@ -85,65 +96,45 @@ export default function RecipeCreate() {
         steps.removeChild(steps[stepSelected])
         for (let index = 0; steps.options[index]; index++)
             arrayStepsList.push({number: index + 1,step:steps.options[index].value})
-        setRecipeNew({
-                ...recipeNew,
+        setForm({
+                ...form,
                 steps: arrayStepsList
             })
     }
-    
-    function textValidation(target) {
-        let input = document.getElementById(target.name)
-        if (input.validity.valueMissing)
-            setErrors({ ...errors, [target.name]: "El campo no puede ser vacio" })
-        else
-            if (input.validity.patternMismatch)
-                setErrors({ ...errors, [target.name]: "Solo letras" })
-        setRecipeNew({
-            ...recipeNew,
-            [target.name]: target.value
-        })
-    }
-
-    function numberValidation(target) {
-        let input = document.getElementById(target.name)
-        if (input.validity.valueMissing)
-            setErrors({ ...errors, [target.name]: "El campo no puede ser vacio" })
-        else
-            if (input.validity.patternMismatch)
-                setErrors({ ...errors, [target.name]: "Solo numeros entre 1 y 100" })
-        setRecipeNew({
-            ...recipeNew,
-            [target.name]: target.value
-        })
-    }
-
+ 
     return (
         <div className="form-container">
+            <form className="form-create" id="formCreate" onSubmit={(e) => { handleOnSubmit(e) }}>
             <h2>Creacion de Receta</h2>
             <span>(* campos obligatorios)</span>
-            <form id="formCreate" onSubmit={(e) => { onSubmit(e) }}>
                 <div className="inputs-containers">
                     <span>Titulo(*):</span> 
-                    <input className="input-validate" name="title" id="title" type="text" onChange={(e) => textValidation(e.target)} pattern="[a-zñA-ZÁÉÍÓÚáéíóúñÑ ]+(\s*[a-zñA-ZÁÉÍÓÚáéíóúñÑ ]*)*[a-zñA-ZÁÉÍÓÚáéíóúñÑ ]+$" required />
-                    <span className="error-message">{errors.title}</span>
+                    <input className="input-normal" name="title" id="title" type="text" onBlur={(e) => {handleOnBlur(e)}} onChange={(e) => {handleOnChange(e)}} required/>
+                </div>
+                <div>
+                    {errors.title && <span className="error-message">{errors.title}</span>}
                 </div>
                 <div>
                     <span>Descripcion(*):</span> 
-                    <input className="input-validate" id="summary" name="summary" type="text" onChange={(e) => textValidation(e.target)} required/>
-                    <span className="error-message">{errors.summary}</span>
+                    <input className="input-area" id="summary" name="summary" type="text" onBlur={(e) => {handleOnBlur(e)}} onChange={(e) => {handleOnChange(e)}} required/>
+                    <div>
+                    {errors.summary && <span className="error-message">{errors.summary}</span>}
+                    </div>
                 </div>
                 <div>
                     <span>Nivel Saludable(*):</span>
-                    <input className="input-validate" id="healtScore" placeholder="80" name="healtScore"  type="text" onChange={(e) => numberValidation(e.target)} pattern="^[1-9]?[0-9]{1}$|^100$" required />
-                    <span className="error-message">{errors.healtScore}</span>
+                    <input className="input-normal" id="healtScore" placeholder="80" name="healtScore"  type="text" onBlur={(e) => {handleOnBlur(e)}} onChange={(e) => {handleOnChange(e)}} required/>
+                </div>
+                <div>
+                    {errors.healtScore && <span className="error-message">{errors.healtScore}</span>}
                 </div>
                 <div>
                     URL de imagen:
-                    <input id="image" name="image" type="text" onBlur={(e) => onChange(e)} />
+                    <input className="input-area" id="image" name="image" type="text" onBlur={(e) => {handleOnBlur(e)}} onChange={(e) => {handleOnChange(e)}} />
                 </div>
                 <div>
                     <p>Dietas(*):</p>
-                    <select id="dietasAll" name="dietasAll"  >
+                    <select id="dietasAll" name="dietasAll" >
                         {
                             dietsAll.map((element, i) => (
                                 <option key={element.id} value={element.name}>{element.name}</option>
@@ -159,12 +150,15 @@ export default function RecipeCreate() {
                         </div>
                         <div className="list-container">
                             <p>Seleccion:</p>
-                            <select className="lists" id="dietasSel" name="diets" multiple="multiple">
+                            <select className="lists" id="diets" name="diets" multiple="multiple" onChange={(e) => {handleOnBlur(e)}}>
                             </select>
                         </div>
                         <div>
+                    {errors.diets && <span className="error-message">{errors.diets}</span>}
+                    </div>
+                        <div>
                             Paso a agregar:
-                            <input id="stepAdd" name="stepAdd" type="text" />
+                            <input className="input-area" id="stepAdd" name="stepAdd" type="text" />
                         </div>
                         <div className="buttons-container">
                             <button className="button-create" type="button" value="Agregar" onClick={(e) => onClickAddStep(e)}><span className="globe">Agregar a Pasos</span>Agregar</button>
@@ -177,8 +171,12 @@ export default function RecipeCreate() {
                             </select>
                         </div>
                     </div>
-
-                    <input className="button" type="submit" value="Crear" />
+                    <div>
+                    <button className="button-submit" type="submit" value="Crear" ><span className="globe">{errors.title} {errors.summary} {errors.healtScore} {errors.diets}</span>Crear</button>
+                    </div>
+                    <div>
+                    {showOk && <span>Se agrego correctamente</span>}        
+                    </div>
                 </div>
             </form>
         </div>
