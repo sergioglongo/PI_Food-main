@@ -44,6 +44,7 @@ export function cleanData(diets) {
         dietasAll.appendChild(option)
         return option
     })
+    document.getElementById("button-submit").disabled = true
 }
 
 export function validationsForm(form) {

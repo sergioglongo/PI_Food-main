@@ -1,0 +1,135 @@
+
+.recipe-container{
+    background-color: white;
+    box-shadow: 0 0 2.5rem rgba(0,0,0,0.28);
+    display: flex;
+    height: 90%;
+    overflow: hidden;
+    border-radius: 10px;
+    width: 70%;
+    margin: 2rem auto;
+}
+.recipe,
+.recipe-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.recipe-box {
+    flex: 3 1 30ch;
+    height: calc(282px + 5vw);
+    overflow: hidden;
+    width: 40%;
+}
+
+.recipe-box img {
+    max-width: 100%;
+    min-height: 100%;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+.title-content{
+    justify-content: center;
+}
+
+.recipe-title {
+    margin: 0;
+    font-size: clamp(1.2em, 2.5vw, 2.1em);
+    font-family: "Roboto Slab", Helvetica, Arial, sans-serif;
+}
+
+.recipe {
+    border: 2px solid #F2F2F2;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.recipe-content {
+    padding: 16px 20px;
+    flex: 4 1 40ch;
+}
+
+.recipe-desc{
+    font-size: 16px; 
+}
+.recipe-tags {
+    margin: 0 -2px;
+}
+
+.recipe-tag {
+    display: inline-block;
+    margin: 8px;
+    font-size: .775em;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: .03em;
+    color: var(--primary);
+}
+
+.recipe-steps{
+    margin: 0 -2px;
+
+}
+
+.recipe-step{
+    display: flow-root;
+    
+}
+
+
+
+.recipe-metadata {
+    margin: 0;
+}
+
+.recipe-rating {
+    font-size: 1.2em;
+    letter-spacing: 0.05em;
+    color: var(--primary);
+}
+
+.recipe-rating span {
+    color: var(--grey);
+}
+
+
+.recipe-votes {
+    font-size: .825em;
+    font-style: italic;
+    color: var(--lightgrey);
+}
+
+
+/* Body Layout */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    --primary: #E05D26;
+    --grey: #454545;
+    --lightgrey: #666;
+
+    color: var(--grey);
+    line-height: 1.55;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-family: "Roboto", Helvetica, Arial, sans-serif;
+}
+
+.big {
+    width: 100%;
+    padding: 24px;
+}
+
+.small {
+    width: clamp(320px, 35%, 480px);
+    padding: 24px;
+}

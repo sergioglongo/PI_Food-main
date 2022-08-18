@@ -9,11 +9,6 @@ require('dotenv').config();
 const { apikey ,dataLimit } = process.env;
 
 
-router.post("/prueba", (req,res) =>{
-    console.log("entre en get",req.body);
-})
-
-
 
 // ruta que si recibe query responde con datos filtrados y si no devuelve todas las recipes
 router.get("/", async(req,res,next) => {
@@ -56,8 +51,13 @@ router.get("/", async(req,res,next) => {
             healtScore: recipe.healthScore,
             diets: recipe.diets,
         })))
-        
-        res.status(200).json(recipesFormatedDb.concat(recipesFormatedApi))
+        let recipesFormatedAll = []
+        if(recipesFormatedApi)
+            recipesFormatedAll = [...recipesFormatedDb.concat(recipesFormatedApi)]
+        else
+        recipesFormatedAll = [...recipesFormatedDb]
+
+        res.status(200).json(recipesFormatedAll)
     }
     catch(error){
             res.status(401).send(error)
@@ -106,7 +106,7 @@ router.get('/:id', async(req,res,next) => {
             id: recipeApi.data.id,
             title: recipeApi.data.title,
             summary: recipeApi.data.summary,
-            healtScore: recipeApi.data.healtScore,
+            healtScore: recipeApi.data.healthScore,
             steps: (recipeApi.data.analyzedInstructions[0] && recipeApi.data.analyzedInstructions[0].steps && recipeApi.data.analyzedInstructions[0].steps?.map(element => {return {number:element.number,step:element.step}}))?(recipeApi.data.analyzedInstructions[0] && recipeApi.data.analyzedInstructions[0].steps && recipeApi.data.analyzedInstructions[0].steps?.map(element => {return {number:element.number,step:element.step}})):[],
             image: recipeApi.data.image,
             diets: recipeApi.data.diets
@@ -126,7 +126,6 @@ router.get('/:id', async(req,res,next) => {
 
 //creacion de Recipe en database
 router.post('/nuevo', async (req,res,next) => {
-    console.log("Paso por nuevo del back, datos:",req.body);
     const recipe = req.body //me llega un objeto pasado transformado por json
     if(recipe.title && recipe.summary){
         try{
@@ -151,5 +150,7 @@ router.post('/nuevo', async (req,res,next) => {
         res.status(402).send("Datos incompletos")
     }
 })
+
+
 
 module.exports = router;

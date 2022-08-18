@@ -1,4 +1,4 @@
-/* input{
+/*input{
     padding: 12px;
     margin: 10px 0px;
     border-radius: 5px;
@@ -11,7 +11,7 @@
     border-radius: 5px;
     border: 1px solid gray; 
     background: white;
-    padding: 20px 50px 20px 50px;
+    padding: 20px 0px 20px 0px;
     margin-top: 30px;
 }
 
@@ -73,15 +73,18 @@
     color: black;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
   }
+ 
   
   .button-submit {
     position: relative;
-    background: rgb(20, 146, 3);;
+    background: rgb(20, 146, 3);
     color:#ffffff;
-    padding: 15px;
+    padding: 35px;
     margin: 20px 1px 1px;
     border-radius: 10px;
-    width: 100%;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
     height: 5px;
     font-size: 17px;
     display: flex;
@@ -97,6 +100,10 @@
     background: white;
     color: black;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  }
+ 
+  .button-submit:disabled{
+    opacity: 0.75;
   }
 
   .globe {
@@ -129,7 +136,7 @@
   .button-submit:hover .globe,
   .button-create:hover .globe {
     top: -35px;
-    left: -35px;
+    left: -135px;
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -159,3 +166,17 @@
   }
 
 
+  .messageOk{
+    background: rgb(20, 146, 3);
+    color: white;
+    width: 100%;
+    padding: 15px 0;
+    border: none;
+  }
+
+  .description-area{
+    /* padding: 12px; */
+    /* margin: 10px 0px; */
+    border-radius: 5px;
+    border: 1px solid gray;     
+  }

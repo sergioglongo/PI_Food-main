@@ -1,12 +1,24 @@
 
 import React from 'react';
+import './loading.css'
 
 export default function Loading() {
     return (
-        <div class="loader">
-            <span class="hour"></span>
-            <span class="min"></span>
-            <span class="circel"></span>
-      </div>
+        <div className='loading-container'>
+        <div class="lds-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        </div>
     );
 }

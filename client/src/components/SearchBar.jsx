@@ -54,35 +54,45 @@ export default function SearchBar() {
     }
 
     function processRecipes() {
-        let recipedProccesed = recipesAll?.filter(recipe => {
-            if (searchText)
-            {   
-                return recipe.title.toLowerCase().includes(searchText.toLowerCase())
-            }
-            else
-            return recipe
-        })
+        try {
+            let recipedProccesed = recipesAll?.filter(recipe => {
+                if (searchText)
+                    return recipe.title.toLowerCase().includes(searchText.toLowerCase())
+                else
+                    return recipe
+            })
 
-        recipedProccesed = recipedProccesed.filter(recipe => {
-            let regExp = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i //formato uuid
-            switch (selectsState['origen']) {
-                case "DB": if (regExp.test(recipe.id)) { // si cumple con la expresion regular es de la DB
-                    if (filterDiet(recipe)) return recipe // Evalua si incluye la dieta seleccionada
-                }
-                break
-                case "API": if (!regExp.test(recipe.id)) { //si no cumple con la expresion regular es de la API
-                    if (filterDiet(recipe)) return recipe // Evalua si incluye la dieta seleccionada
-                }
-                break
-                default: if (filterDiet(recipe)) return recipe // Evalua si incluye la dieta seleccionada
-            } // fin del switch origen
-        })// fin del recipesAll.filter
+            recipedProccesed = recipedProccesed.filter(recipe => {
+                let regExp = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i //formato uuid
+                switch (selectsState['origen']) {
+                    case "DB": if (regExp.test(recipe.id)) { // si cumple con la expresion regular es de la DB
+                        if (filterDiet(recipe)) return recipe // Evalua si incluye la dieta seleccionada
+                    }
+                        break
+                    case "API": if (!regExp.test(recipe.id)) { //si no cumple con la expresion regular es de la API
+                        if (filterDiet(recipe)) return recipe // Evalua si incluye la dieta seleccionada
+                    }
+                        break
+                    default: if (filterDiet(recipe)) return recipe // Evalua si incluye la dieta seleccionada
+                } // fin del switch origen
+            })// fin del recipesAll.filter
 
-        switch (selectsState['ordenarPor']) {
-            case 'TIT': return ordenar("title", recipedProccesed)
-            case 'SCO': return ordenar("healtScore", recipedProccesed)
-            default: return recipedProccesed
-        }//fin del switch ordenarPor
+            switch (selectsState['ordenarPor']) {
+                case 'TIT': return ordenar("title", recipedProccesed)
+                case 'SCO': return ordenar("healtScore", recipedProccesed)
+                default: return recipedProccesed
+            }//fin del switch ordenarPor
+        } catch (error) {
+            console.log(error);
+            return [{
+                id: 0,
+                title: error.status,
+                image: "",
+                healtScore: 0,
+                diets: [],
+            }]
+        }
+    
     }//fin processRecipe
 
     function filterDiet(recipe) {

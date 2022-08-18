@@ -15,9 +15,9 @@ export default function Recipe(props) {
             <div className='info-container'>
                 <h3 className='title'>{props.title}</h3>
                 <div className='info'>
-                    <div>Tipos de recetas</div> 
+                    <div>Tipos de dietas</div> 
                     <ul className='list'>
-                        {props.diets.map(diet => (
+                        {props.diets?.map(diet => (
 
                             <li key={index++}>
                                 {diet}

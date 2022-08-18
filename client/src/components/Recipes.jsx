@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux"
 import Recipe from './Recipe'
 import "./recipes.css";
+import { useLocation, useHistory } from "react-router-dom";
+import Loading from './Loading'
 
 export default function Recipes() {
 
@@ -8,9 +10,17 @@ export default function Recipes() {
     const recipesPags = useSelector(state => state.recipesPags)
     const currentPage = useSelector(state => state.currentPage)
   
+    let history = useHistory()
+    if(recipesPags[0]?.map(e => e.id)[0] === 0)
+        history.push('/FoodHome/error404')
+ 
     return (
         <div>
-            <div className="contenedor">
+            
+            {!recipesPags.length ? (
+        <Loading />
+      ) : (
+        <div className="contenedor">
                     {
                         recipesPags[currentPage-1]?.map(recipe => {
                             return <Recipe
@@ -24,6 +34,8 @@ export default function Recipes() {
                         })
                     }
             </div>
+      )}
         </div>
     )
+
 }

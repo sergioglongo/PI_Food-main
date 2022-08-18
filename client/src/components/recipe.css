@@ -43,7 +43,7 @@
 
 
 .pictureContainer{
-    height: 252px;
+    height: 233px;
     width: 300px;
 }
 .picture{
@@ -62,27 +62,31 @@
  
     text-align: center;
     font-size: larger;
-    font-weight: 400;
-    color: lightslategray
+    font-weight: 650;
+    color: lightslategray;
+    height: 85px;
 }
 
 .list{
     list-style: none;
-    display: inline-block;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     margin: 8px;
-    font-size: 10px;
+    font-weight: 800;
+    font-size: 12px;
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: .03em;
-    color: var(--primary);
+    color: orange;
 }
 
 .title{
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 600;
     margin-top: 15px;
     color: black;
-    height: 30px;
+    height: 100px;
+    text-align: center;
 }
 
 

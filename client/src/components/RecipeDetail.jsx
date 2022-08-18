@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from "react";
 import { getRecipeById, emptyRecipeById } from '../redux/actions'
+import Recipe from './Recipe'
 import './recipedetail.css'
 
 export default function RecipeDetail(params) {
@@ -19,45 +20,50 @@ export default function RecipeDetail(params) {
     }, [dispatch, recipeId])
 
     const recipeById = useSelector(state => state.recipeById)
-
     return (
+        
         <div className="recipe-container">
-            <div className="big">
-                <article className="recipe">
-                    <div className="pizza-box">
-                    <div className="title-content">
-                    <h1 className="recipe-title">{recipeById.title}</h1>
+            <div className="header">
+                <div className='picture-container'>
+                    <img src={recipeById.image} alt="no disponible" />
+                </div>
+                <div className='info-container'>
+                    <h3 className='recipe-title'>{recipeById.title}</h3>
+                    <div className='star-container'>
+                        <span >{recipeById.healtScore}</span>
+                        <img src='https://www.seekpng.com/png/full/38-387704_star-vector-png-transparent-image-star-vector-png.png' alt="" />
                     </div>
-                        <img src={recipeById.image} width="556" height="370" alt=""></img>
+                    <div className='recipe-info'>
+                        <div className="description-title">Tipos de dietas</div>
+                        <ul className='diets-list'>
+                            {recipeById.diets?.map(diet => (
+                                <li key={indexDiet++}>
+                                    {diet}
+                                </li>
+                            ))}
+                        </ul>
                     </div>
-                    <div className="recipe-content">
+                </div>
 
-
-                        <p className="recipe-metadata">
-                        </p>
-                        <h3>Descripción</h3>
-                        <p className="recipe-desc" dangerouslySetInnerHTML={{ __html: recipeById.summary }}></p>
-                        <h3>Pasos</h3>
-                        <p className="recipe-steps">
-                        {recipeById.steps?.map(step => (
-                            <span className="recipe-step" key={indexStep++}>
-                                {step.number} - {step.step}
-                            </span>
-                        ))}
-                        </p>
-                        <h3>Dietas</h3>
-                        <p className="recipe-tags">
-                        {recipeById.diets?.map(diet => (
-                            <span className="recipe-tag" key={indexDiet++}>
-                                {diet}
-                            </span>
-                        ))}
-                        </p>
-                    </div>
-                </article>
             </div>
-
-       </div>
+            <div className="recipe-content">
+                <h3 className="description-title">Descripción</h3>
+                <div className="description">
+                    <p className="recipe-desc" dangerouslySetInnerHTML={{ __html: recipeById.summary }}></p>
+                    <br />
+                </div>
+                <h3 className="description-title">Pasos</h3>
+                <p className="recipe-steps">
+                    {recipeById.steps?.map(step => (
+                        <span className="recipe-step" key={indexStep++}>
+                            {step.number} - {step.step}
+                            <br />
+                        </span>
+                    ))}
+ 
+                </p>
+            </div>
+        </div>
     )
 
 }

@@ -16,8 +16,8 @@ export default function RecipeCreate() {
     }
 
     const [form, setForm] = useState(initialForm)
-    const [errors,setErrors]= useState({})
-    let showOk = false
+    const [errors,setErrors]= useState({propiedad:"algo"})
+    const [createOk,setCreateOk] = useState(false)
 
     const dispatch = useDispatch()
     
@@ -26,6 +26,11 @@ export default function RecipeCreate() {
     }, [dispatch])
     
     const dietsAll = useSelector(state=> state.dietsAll)
+
+    useEffect(() => {
+        buttonCreateEnable()
+    }, [errors])
+    
 
     function handleOnChange(e) {
         const {name,value} = e.target
@@ -40,14 +45,24 @@ export default function RecipeCreate() {
         setErrors(validationsForm(form))
     }
 
+    function buttonCreateEnable() {
+        if (Object.keys(errors).length === 0)
+            document.getElementById("button-submit").disabled = false
+        else
+            document.getElementById("button-submit").disabled = true
+    }
+
     function handleOnSubmit(e) {
         e.preventDefault()
         setErrors(validationsForm(form))
         if(Object.keys(errors).length === 0)
         {
             setRecipeCreate(form)
+            setCreateOk(true)
+            setTimeout(() => {
+                setCreateOk(false)
+            }, 7000);
             cleanData(dietsAll)
-            alert("Se agrego la receta correctamente")
         }
     }
     
@@ -58,7 +73,7 @@ export default function RecipeCreate() {
                 ...form,
                 diets: onClickAddLogic()
             }) 
-            setErrors(validationsForm(form))
+        setErrors(validationsForm(form))
     }
     
     function onClickQuit(e) {//Quitar de select de dietas elegidas y pasarlo a lista de dietas disponibles
@@ -106,7 +121,7 @@ export default function RecipeCreate() {
         <div className="form-container">
             <form className="form-create" id="formCreate" onSubmit={(e) => { handleOnSubmit(e) }}>
             <h2>Creacion de Receta</h2>
-            <span>(* campos obligatorios)</span>
+            <h5>(* campos obligatorios)</h5>
                 <div className="inputs-containers">
                     <span>Titulo(*):</span> 
                     <input className="input-normal" name="title" id="title" type="text" onBlur={(e) => {handleOnBlur(e)}} onChange={(e) => {handleOnChange(e)}} required/>
@@ -114,9 +129,9 @@ export default function RecipeCreate() {
                 <div>
                     {errors.title && <span className="error-message">{errors.title}</span>}
                 </div>
-                <div>
+                <div >
                     <span>Descripcion(*):</span> 
-                    <input className="input-area" id="summary" name="summary" type="text" onBlur={(e) => {handleOnBlur(e)}} onChange={(e) => {handleOnChange(e)}} required/>
+                    <textarea className="description-area" id="summary" name="summary"  cols="30" rows="3" onBlur={(e) => {handleOnBlur(e)}} onChange={(e) => {handleOnChange(e)}} required/>
                     <div>
                     {errors.summary && <span className="error-message">{errors.summary}</span>}
                     </div>
@@ -129,11 +144,11 @@ export default function RecipeCreate() {
                     {errors.healtScore && <span className="error-message">{errors.healtScore}</span>}
                 </div>
                 <div>
-                    URL de imagen:
+                    URL de imagen: 
                     <input className="input-area" id="image" name="image" type="text" onBlur={(e) => {handleOnBlur(e)}} onChange={(e) => {handleOnChange(e)}} />
                 </div>
                 <div>
-                    <p>Dietas(*):</p>
+                    Elegir dietas(*): 
                     <select id="dietasAll" name="dietasAll" >
                         {
                             dietsAll.map((element, i) => (
@@ -149,16 +164,17 @@ export default function RecipeCreate() {
                             <button className="button-create" type="button" value="Quitar" onClick={(e) => { onClickQuit(e) }} ><span className="globe">Quitar de Dietas</span>Quitar</button> 
                         </div>
                         <div className="list-container">
-                            <p>Seleccion:</p>
+                            <p>Dietas seleccionadas:</p>
                             <select className="lists" id="diets" name="diets" multiple="multiple" onChange={(e) => {handleOnBlur(e)}}>
                             </select>
                         </div>
                         <div>
                     {errors.diets && <span className="error-message">{errors.diets}</span>}
                     </div>
+                    <br />
                         <div>
                             Paso a agregar:
-                            <input className="input-area" id="stepAdd" name="stepAdd" type="text" />
+                            <textarea className="description-area" cols="30" rows="2" id="stepAdd" name="stepAdd" type="text" />
                         </div>
                         <div className="buttons-container">
                             <button className="button-create" type="button" value="Agregar" onClick={(e) => onClickAddStep(e)}><span className="globe">Agregar a Pasos</span>Agregar</button>
@@ -171,11 +187,11 @@ export default function RecipeCreate() {
                             </select>
                         </div>
                     </div>
+                    {createOk &&<div className="messageOk">
+                     <span>Se agrego correctamente</span>        
+                    </div>}
                     <div>
-                    <button className="button-submit" type="submit" value="Crear" ><span className="globe">{errors.title} {errors.summary} {errors.healtScore} {errors.diets}</span>Crear</button>
-                    </div>
-                    <div>
-                    {showOk && <span>Se agrego correctamente</span>}        
+                    <button id="button-submit" className="button-submit" type="submit" value="Crear" disabled > {Object.keys(errors).length !== 0 && <span className="globe">Revisar errores: {errors.title} {errors.summary} {errors.healtScore} {errors.diets}</span>}Crear</button>
                     </div>
                 </div>
             </form>

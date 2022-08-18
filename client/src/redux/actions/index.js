@@ -1,10 +1,16 @@
 
 
 export const getAllRecipes = () => async dispatch => {
-
+  try{
   return await fetch(`http://localhost:3001/recipe/`)
     .then(r => r.json())
     .then(data => dispatch({ type: "GET_ALL_RECIPES", payload: data }))
+    .catch(error=> console.log('Error de fetch API'))
+  }
+  catch(error){
+    console.log('Error de try API');
+    throw 'Error de API'
+  }
 }
 
 export function getRecipeById(data) {
