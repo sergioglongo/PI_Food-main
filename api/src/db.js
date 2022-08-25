@@ -6,7 +6,7 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/food`, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/pf-prueba`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
@@ -30,13 +30,51 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Recipe } = sequelize.models;
-const {Diet} = sequelize.models
+// const { Recipe } = sequelize.models;
+// const {Diet} = sequelize.models
+  const {Curso,Alumno,Notas,Asistencia,Materia,Usuario,ConceptoPago,Pago,Notificacion,TipoNotificacion,TipoUsuario} = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-Recipe.belongsToMany(Diet, {through: 'RecipeDiet'})
-Diet.belongsToMany(Recipe, {through: 'RecipeDiet'})
+// Recipe.belongsToMany(Diet, {through: 'RecipeDiet'})
+// Diet.belongsToMany(Recipe, {through: 'RecipeDiet'})
+Curso.hasMany(Alumno,{
+  foreignKey: 'idCurso'
+})
+Alumno.belongsTo(Curso,{
+  foreignKey: 'idAlumno',
+  target_key:'idCurso'
+})
+Alumno.hasMany(Asistencia,{
+  foreignKey: 'idAlumno'
+})
+Alumno.hasMany(Notas,{
+  foreignKey: 'idAlumno'
+})
+Usuario.hasMany(Curso,{
+  foreignKey: 'idUsuario'
+})
+Materia.hasMany(Notas,{
+  foreignKey: 'idMateria'
+})
+TipoUsuario.hasMany(Usuario,{
+  foreignKey: 'idTipoUsuario'
+})
+Alumno.belongsToMany(Usuario, {through: 'UsuarioAlumno'})
+Usuario.belongsToMany(Alumno, {through: 'UsuarioAlumno'})
+
+Pago.belongsToMany(Usuario, {through: 'UsuarioPago'})
+Usuario.belongsToMany(Pago, {through: 'UsuarioPago'})
+ConceptoPago.hasMany(Pago,{
+  foreignKey: 'idConceptoPago'
+})
+
+Alumno.belongsToMany(Notificacion, {through: 'NotificacionAlumno'})
+Notificacion.belongsToMany(Alumno, {through: 'NotificacionAlumno'})
+
+TipoNotificacion.hasMany(Notificacion,{
+  foreignKey: 'idTipoNotificacion'
+})
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

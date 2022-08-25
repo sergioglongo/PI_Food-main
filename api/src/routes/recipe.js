@@ -3,11 +3,11 @@ const axios = require('axios')
 const {v4: uuidv4} = require('uuid')
 const {Recipe} = require('../db');
 const {Diet} = require('../db');
-const router = Router();
 const { Op } = require("sequelize");
 require('dotenv').config();
 const { apikey ,dataLimit } = process.env;
 
+const router = Router();
 
 
 // ruta que si recibe query responde con datos filtrados y si no devuelve todas las recipes
@@ -150,6 +150,7 @@ router.post('/nuevo', async (req,res,next) => {
         res.status(402).send("Datos incompletos")
     }
 })
+
 
 
 
